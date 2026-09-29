@@ -7,7 +7,7 @@
     <title>Agency Compiler — MVP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,ital,wght@6..96,0,400;6..96,1,400&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -17,14 +17,14 @@
     </header>
     <main id="top">
       <section class="hero">
-        <p class="eyebrow">01 — studio architecture</p>
+        <p class="eyebrow">studio architecture</p>
         <h1>Build the studio.<br><i>Then compile the work.</i></h1>
         <p class="intro">A guided front door for creative owners. Explain the work you do; we turn it into an evidence-backed operating model and a project-ready pod.</p>
         <a class="button primary" href="#onboarding">Start with your studio <b>↓</b></a>
       </section>
 
       <section class="section split" id="onboarding">
-        <div class="section-label"><p class="eyebrow">02 — non-AI-native onboarding</p><h2>Tell us about the<br><i>business.</i></h2><p>There are no agents to configure here. Just your team, your craft, and where work is headed.</p></div>
+        <div class="section-label"><p class="eyebrow">guided onboarding</p><h2>Tell us about the<br><i>business.</i></h2><p>There are no agents to configure here. Just your team, your craft, and where work is headed.</p></div>
         <form id="studio-form" class="panel form-panel">
           <label>Studio name<input id="studio-name" required value="Northstar Entertainment" /></label>
           <label>Core focus<textarea id="studio-focus" rows="3">Entertainment creative, trailers, key art, and social launch campaigns.</textarea></label>
@@ -34,31 +34,31 @@
       </section>
 
       <section class="section" id="studio-result" hidden>
-        <div class="result-head"><div><p class="eyebrow">03 — recommended Studio Model</p><h2 id="recommendation-title">Your structure</h2></div><button id="compile-button" class="button dark">Compile Studio Model <b>→</b></button></div>
+        <div class="result-head"><div><p class="eyebrow">recommended Studio Model</p><h2 id="recommendation-title">Your structure</h2></div><button id="compile-button" class="button dark">Compile Studio Model <b>→</b></button></div>
         <div class="recommendation-grid"><div id="roles" class="roles"></div><aside class="evidence"><p class="eyebrow">why this structure</p><div id="evidence-list"></div></aside></div>
         <div class="add-role"><input id="new-role" placeholder="Add a role or capability" /><button id="add-role" class="button outline" type="button">Add</button></div>
       </section>
 
       <section class="section compiled" id="compiled-result" hidden>
-        <div><p class="eyebrow">04 — immutable model version</p><h2>Studio Model<br><i>compiled.</i></h2><p class="muted">A portable operating blueprint. It is not the live team: each project creates its own Studio Instance and project pod.</p></div>
+        <div><p class="eyebrow">immutable model version</p><h2>Studio Model<br><i>compiled.</i></h2><p class="muted">A portable operating blueprint. It is not the live team: each project creates its own Studio Instance and project pod.</p></div>
         <pre id="manifest"></pre>
       </section>
 
       <section class="section project-section" id="project">
-        <div class="project-intro"><p class="eyebrow">05 — compile a project</p><h2>What needs to<br><i>ship next?</i></h2><p>Project-specific recommendations are generated separately from the persistent studio model.</p></div>
+        <div class="project-intro"><p class="eyebrow">compile a project</p><h2>What needs to<br><i>ship next?</i></h2><p>Project-specific recommendations are generated separately from the persistent studio model.</p></div>
         <div class="panel brief-panel"><label>Project brief<textarea id="project-brief" rows="7">Create a launch trailer campaign for an original sci-fi series. Deliver a 90-second master trailer, 30s and 15s cutdowns, campaign key art frames, and a social rollout package. The launch is in six weeks.</textarea></label><button id="project-button" type="button" class="button primary">Classify + assemble pod <b>→</b></button></div>
       </section>
 
       <section class="section" id="project-result" hidden>
         <div class="classification"><p class="eyebrow">project archetype</p><h2 id="archetype">Trailer Campaign</h2><div class="confidence"><span id="confidence-bar"></span></div><p id="classification-rationale"></p></div>
         <div class="pod-grid"><article><p class="eyebrow">project pod</p><ul id="pod-list" class="plain-list"></ul></article><article><p class="eyebrow">workflow + approval gates</p><ol id="workflow-list" class="workflow"></ol><div id="gates" class="gates"></div></article><article><p class="eyebrow">required artifacts</p><ul id="artifact-list" class="artifact-list"></ul></article></div>
-        <div class="run-row"><div><p class="eyebrow">06 — execution simulator</p><p>Run the compiled project through a simulated completion cycle. Local-only demo data.</p></div><button id="simulate-button" class="button dark" type="button">Simulate execution <b>→</b></button></div>
+        <div class="run-row"><div><p class="eyebrow">execution simulator</p><p>Run the compiled project through a simulated completion cycle. Local-only demo data.</p></div><button id="simulate-button" class="button dark" type="button">Simulate execution <b>→</b></button></div>
       </section>
 
       <section class="section telemetry" id="telemetry" hidden>
-        <p class="eyebrow">07 — success profile / telemetry</p><h2>What the model<br><i>learned.</i></h2><div class="metric-grid" id="metrics"></div><p class="telemetry-note">This simulated outcome is intentionally not written into the Platform Empirical KB. Production telemetry requires consent, anonymization, and enough completed projects to support a claim.</p></section>
+        <p class="eyebrow">success profile / telemetry</p><h2>What the model<br><i>learned.</i></h2><div class="metric-grid" id="metrics"></div><p class="telemetry-note">This simulated outcome is intentionally not written into the Platform Empirical KB. Production telemetry requires consent, anonymization, and enough completed projects to support a claim.</p></section>
     </main>
-    <footer>Agency Compiler MVP · Capabilities are durable; agents are merely one possible runtime resolution.</footer>
+    <footer>Agency Compiler MVP. Capabilities are durable; agents are merely one possible runtime resolution.</footer>
     <script type="module" src="app.js"></script>
   </body>
 </html>

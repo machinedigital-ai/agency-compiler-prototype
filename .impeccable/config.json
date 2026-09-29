@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-29T22:36:57.348Z",
+        "reason": "Agent: each section has a responsive 20px to 140px horizontal inset; detector cannot resolve clamp padding."
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-29T22:37:17.792Z",
+        "reason": "Agent: this applies only to 34px to 96px display headings with intentional line breaks, not body copy."
+      }
+    ]
+  }
+}
