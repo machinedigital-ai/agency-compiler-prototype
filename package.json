@@ -1,0 +1,8 @@
+{
+  "name": "agency-compiler-mvp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node --check logic.js && node --check app.js && node logic.js"
+  }
+}
