@@ -2,3 +2,5 @@
 .env*
 !.env.example
 work/
+.playwright-cli/
+outputs/*.png

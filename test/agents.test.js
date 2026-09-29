@@ -22,8 +22,9 @@ test('agent endpoint protects access, reads Band, and runs approved Crusoe work'
     }
     crusoeCalls++;
     const body = JSON.parse(options.body);
-    assert.equal(body.model, 'google/gemma-4-31b-it');
-    assert.equal(body.max_tokens, 800);
+    assert.equal(body.model, 'nvidia/Nemotron-3.5-Lightning-30B-A3B');
+    assert.equal(body.max_tokens, 512);
+    assert.equal(body.chat_template_kwargs.enable_thinking, false);
     return new Response(JSON.stringify({ choices: [{ message: { content: 'Campaign direction\n\nOWNER DECISION NEEDED: Choose A.' } }], usage: { prompt_tokens: 1000, completion_tokens: 1000 } }));
   };
   async function request(method = 'GET', body, code = 'test-demo-code') {
@@ -41,7 +42,7 @@ test('agent endpoint protects access, reads Band, and runs approved Crusoe work'
     const result = await request('POST', { agentId: bandAgent.id, task: 'Draft campaign direction', brief: 'Launch a sci-fi series.' });
     assert.equal(result.code, 200);
     assert.equal(result.data.run.status, 'awaiting_approval');
-    assert.equal(result.data.run.usage.estimatedUsd, 0.00054);
+    assert.equal(result.data.run.usage.estimatedUsd, 0.00025);
     assert.equal(crusoeCalls, 1);
     assert.ok(!JSON.stringify(result.data).includes('test-crusoe-key'));
   } finally {

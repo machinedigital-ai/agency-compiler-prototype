@@ -36,7 +36,7 @@ $('#agent-list').addEventListener('click',async event=>{
   if(event.target.closest('.pause-agent')){const paused=state.paused.includes(agent.id);state.paused=paused?state.paused.filter(id=>id!==agent.id):[...state.paused,agent.id];save();log(`${agent.shortName} ${paused?'resumed':'paused'} by owner.`);renderAgents();return;}
   if(!event.target.closest('.run-agent'))return;
   const task=row.querySelector('textarea').value.trim(); if(!task)return;
-  row.classList.add('is-working');row.querySelector('.state').textContent='Working';row.querySelector('.run-agent').disabled=true;renderStats();log(`${agent.shortName} started: ${task}`);
+  row.classList.add('is-working');row.querySelector('.state').textContent='Working';document.querySelectorAll('.run-agent').forEach(button=>button.disabled=true);renderStats();log(`${agent.shortName} started: ${task}`);
   try{const response=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json','x-demo-access-code':code},body:JSON.stringify({agentId:agent.id,task,brief:defaultBrief}),signal:AbortSignal.timeout(65000)});const body=await response.json();if(!response.ok)throw new Error(body.error||'Agent run failed.');state.runs.unshift(body.run);save();log(`${agent.shortName} finished and is waiting for your approval.`);renderDecisions();}
   catch(error){log(`${agent.shortName} stopped: ${error.name==='TimeoutError'?'request timed out':error.message}`);alert(error.message);} finally{renderAgents();}
 });
