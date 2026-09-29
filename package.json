@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "verify": "node --check logic.js && node --check app.js && node logic.js"
+    "dev": "node --env-file=.env.local server.mjs",
+    "verify": "node --check logic.js && node --check app.js && node --check dashboard.js && node --check api/compile.js && node --check api/agents.js && node logic.js && node --test test/*.test.js"
   }
 }

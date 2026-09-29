@@ -1,0 +1,6 @@
+.env*
+work/
+outputs/
+.impeccable/
+test/
+server.mjs

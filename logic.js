@@ -63,7 +63,8 @@ export function compileStudio(studio) {
     capabilities: [...new Set([...studio.capabilities, ...studio.roles.map(({ title }) => title)])],
     resolutions: studio.roles.map(({ title, resolution }) => ({ capability: title, resolution })),
     approvals: ["Creative Director", "Producer / Project Lead"],
-    knowledgeScopes: ["Structural KB", "Project Success KB", "Platform Empirical KB (anonymized)"]
+    knowledgeScopes: ["Structural KB", "Project Success KB", "Platform Empirical KB (anonymized)"],
+    runtimeProvider: studio.generation ? { provider: studio.generation.provider, model: studio.generation.model } : null
   };
 }
 

@@ -23,13 +23,23 @@
         <a class="button primary" href="#onboarding">Start with your studio <b>↓</b></a>
       </section>
 
+      <section class="section" id="live-compiler">
+        <h2>Try a real compilation.</h2>
+        <p>Use the studio details and project brief below to generate a studio structure, project plan, and first draft artifact with Gemma 4 through Crusoe.</p>
+        <label>Private demo access code<input id="access-code" type="password" autocomplete="off" placeholder="Enter the demo code, not your Crusoe API key" /></label>
+        <button class="button primary" id="live-button" type="button">Generate live sample <b>→</b></button>
+        <button class="button outline" id="download-button" type="button" hidden>Download generated model</button>
+        <a class="button dark" id="dashboard-link" href="/dashboard">Open owner dashboard <b>→</b></a>
+        <p id="live-status" role="status" aria-live="polite">One request per click. Output capped at 2,400 tokens. The controls below also support a free seeded demo.</p>
+      </section>
+
       <section class="section split" id="onboarding">
         <div class="section-label"><p class="eyebrow">guided onboarding</p><h2>Tell us about the<br><i>business.</i></h2><p>There are no agents to configure here. Just your team, your craft, and where work is headed.</p></div>
         <form id="studio-form" class="panel form-panel">
           <label>Studio name<input id="studio-name" required value="Northstar Entertainment" /></label>
           <label>Core focus<textarea id="studio-focus" rows="3">Entertainment creative, trailers, key art, and social launch campaigns.</textarea></label>
           <label>Current team size<div class="range-row"><input id="team-size" type="range" min="1" max="15" value="3" /><output id="team-size-output">3 people</output></div></label>
-          <button class="button primary" type="submit">Generate studio structure <b>→</b></button>
+          <button class="button primary" type="submit">Generate seeded studio structure <b>→</b></button>
         </form>
       </section>
 
@@ -53,6 +63,13 @@
         <div class="classification"><p class="eyebrow">project archetype</p><h2 id="archetype">Trailer Campaign</h2><div class="confidence"><span id="confidence-bar"></span></div><p id="classification-rationale"></p></div>
         <div class="pod-grid"><article><p class="eyebrow">project pod</p><ul id="pod-list" class="plain-list"></ul></article><article><p class="eyebrow">workflow + approval gates</p><ol id="workflow-list" class="workflow"></ol><div id="gates" class="gates"></div></article><article><p class="eyebrow">required artifacts</p><ul id="artifact-list" class="artifact-list"></ul></article></div>
         <div class="run-row"><div><p class="eyebrow">execution simulator</p><p>Run the compiled project through a simulated completion cycle. Local-only demo data.</p></div><button id="simulate-button" class="button dark" type="button">Simulate execution <b>→</b></button></div>
+      </section>
+
+      <section class="section" id="live-artifact" hidden>
+        <h2 id="artifact-title">Your first draft</h2>
+        <p>AI-generated planning draft. Review before use; no media was rendered or external work executed.</p>
+        <pre id="artifact-content" style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit"></pre>
+        <p id="generation-receipt"></p>
       </section>
 
       <section class="section telemetry" id="telemetry" hidden>

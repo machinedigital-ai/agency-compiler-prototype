@@ -1,0 +1,181 @@
+{
+  "studio": {
+    "pattern": "Lean Hybrid Creative",
+    "roles": [
+      {
+        "id": "capability-1",
+        "title": "Creative Director",
+        "resolution": "human",
+        "mandate": "Strategy, client management, and final creative sign-off"
+      },
+      {
+        "id": "capability-2",
+        "title": "Lead Editor/Motion Designer",
+        "resolution": "human + AI copilot",
+        "mandate": "Trailer assembly, VFX, and cutdown production"
+      },
+      {
+        "id": "capability-3",
+        "title": "Visual Artist",
+        "resolution": "AI-assisted",
+        "mandate": "Key art generation and social asset adaptation"
+      }
+    ],
+    "capabilities": [
+      "Cinematic Editing",
+      "Concept Art",
+      "Campaign Strategy",
+      "Social Optimization"
+    ]
+  },
+  "project": {
+    "label": "High-Velocity Launch Campaign",
+    "rationale": "Tight 6-week window requires parallel production of art and video assets.",
+    "pod": [
+      "Strategy + Creative Director",
+      "Video Production + Lead Editor",
+      "Visual Identity + Visual Artist"
+    ],
+    "workflow": [
+      "Strategy Alignment",
+      "Asset Harvesting",
+      "Master Edit",
+      "Art Finalization",
+      "Cutdown Iteration",
+      "Delivery"
+    ],
+    "artifacts": [
+      "90s Master Trailer",
+      "30s/15s Cutdowns",
+      "Key Art Frames",
+      "Social Package"
+    ],
+    "gates": [
+      "Creative Director + Strategy Approval",
+      "Creative Director + Final Master Sign-off"
+    ]
+  },
+  "sampleArtifact": {
+    "title": "Campaign Beat Sheet",
+    "content": "0-15s: Atmospheric world-build (Sci-Fi vistas). 15-45s: Character introductions and inciting incident. 45-75s: Escalating tension/action montage. 75-90s: Title reveal and CTA. Key Art: High-contrast neon silhouette against a void."
+  },
+  "input": {
+    "studioName": "Northstar Entertainment",
+    "teamSize": 3,
+    "focus": "Entertainment creative, trailers, key art, and social launch campaigns.",
+    "brief": "Create a launch trailer campaign for an original sci-fi series. Deliver a 90-second master trailer, 30s and 15s cutdowns, campaign key art frames, and a social rollout package. The launch is in six weeks."
+  },
+  "generation": {
+    "provider": "Crusoe",
+    "model": "google/gemma-4-31b-it",
+    "generatedAt": "2026-09-29T22:44:15.189Z",
+    "durationMs": 14738,
+    "usage": {
+      "inputTokens": 428,
+      "outputTokens": 381,
+      "estimatedUsd": 0.00021232000000000003
+    },
+    "pricingNote": "Estimate using published rates checked 2026-09-29, not account balance or a billing guarantee."
+  },
+  "editedStudio": {
+    "studioName": "Northstar Entertainment",
+    "teamSize": 3,
+    "focus": "Entertainment creative, trailers, key art, and social launch campaigns.",
+    "pattern": "Lean Hybrid Creative",
+    "roles": [
+      {
+        "id": "capability-1",
+        "title": "Creative Director",
+        "resolution": "human",
+        "mandate": "Strategy, client management, and final creative sign-off"
+      },
+      {
+        "id": "capability-2",
+        "title": "Lead Editor/Motion Designer",
+        "resolution": "human + AI copilot",
+        "mandate": "Trailer assembly, VFX, and cutdown production"
+      },
+      {
+        "id": "capability-3",
+        "title": "Visual Artist",
+        "resolution": "AI-assisted",
+        "mandate": "Key art generation and social asset adaptation"
+      }
+    ],
+    "capabilities": [
+      "Cinematic Editing",
+      "Concept Art",
+      "Campaign Strategy",
+      "Social Optimization"
+    ],
+    "generation": {
+      "provider": "Crusoe",
+      "model": "google/gemma-4-31b-it",
+      "generatedAt": "2026-09-29T22:44:15.189Z",
+      "durationMs": 14738,
+      "usage": {
+        "inputTokens": 428,
+        "outputTokens": 381,
+        "estimatedUsd": 0.00021232000000000003
+      },
+      "pricingNote": "Estimate using published rates checked 2026-09-29, not account balance or a billing guarantee."
+    },
+    "evidence": [
+      {
+        "source": "Structural KB · expert seed",
+        "claim": "Small studios combine direction, production, and client management. Recommendations below are model proposals."
+      },
+      {
+        "source": "Project Success KB · expert seed",
+        "claim": "Align strategy before production and require human approvals. No measured success rate is claimed."
+      },
+      {
+        "source": "Platform Empirical KB · no real data",
+        "claim": "Simulated metrics do not establish performance evidence and are not supplied to the model."
+      }
+    ]
+  },
+  "manifest": {
+    "id": "studio-model-northstar-entertainment-v1",
+    "version": "1.0.0",
+    "privacy": "private",
+    "model": "Northstar Entertainment",
+    "instance": "Northstar Entertainment / demo instance",
+    "capabilities": [
+      "Cinematic Editing",
+      "Concept Art",
+      "Campaign Strategy",
+      "Social Optimization",
+      "Creative Director",
+      "Lead Editor/Motion Designer",
+      "Visual Artist"
+    ],
+    "resolutions": [
+      {
+        "capability": "Creative Director",
+        "resolution": "human"
+      },
+      {
+        "capability": "Lead Editor/Motion Designer",
+        "resolution": "human + AI copilot"
+      },
+      {
+        "capability": "Visual Artist",
+        "resolution": "AI-assisted"
+      }
+    ],
+    "approvals": [
+      "Creative Director",
+      "Producer / Project Lead"
+    ],
+    "knowledgeScopes": [
+      "Structural KB",
+      "Project Success KB",
+      "Platform Empirical KB (anonymized)"
+    ],
+    "runtimeProvider": {
+      "provider": "Crusoe",
+      "model": "google/gemma-4-31b-it"
+    }
+  }
+}

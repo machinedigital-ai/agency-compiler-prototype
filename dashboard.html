@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Agency Compiler owner dashboard." />
+    <title>Your Agency — Agency Compiler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <header class="dash-header"><a href="/" class="dash-brand"><b>A/</b> AGENCY COMPILER</a><nav><a href="/">Studio builder</a><span class="saved"><i></i> Owner controls</span></nav></header>
+    <main class="dashboard">
+      <section class="welcome"><div><p class="label">Northstar Entertainment</p><h1>Your agency at work.</h1><p>See what each agent is for, assign work, and make every decision that matters.</p></div><button class="primary" id="refresh-button" type="button">Refresh team</button></section>
+
+      <section class="access" id="access-panel"><div><h2>Unlock your private dashboard</h2><p>This code protects your Crusoe credits and Band agent roster.</p></div><label>Access code<input id="dashboard-code" type="password" autocomplete="off" /></label><button class="primary" id="unlock-button" type="button">Open dashboard</button><p id="access-status" role="status"></p></section>
+
+      <div id="owner-view" hidden>
+        <section class="overview" aria-label="Agency status">
+          <div><span>Agents</span><b id="agent-count">—</b><small>registered in Band</small></div>
+          <div><span>Working now</span><b id="working-count">0</b><small>live assignments</small></div>
+          <div><span>Your approvals</span><b id="approval-count">0</b><small>decisions waiting</small></div>
+          <div><span>Session spend</span><b id="session-cost">$0.0000</b><small>estimated Crusoe cost</small></div>
+        </section>
+
+        <section class="project-strip"><div><p class="label">Current project</p><h2>Sci-fi series launch campaign</h2><p>90-second trailer, cutdowns, key art, and social rollout · Six-week schedule</p></div><div class="project-stage"><span>Plan</span><b>In progress</b><small>Owner approval required before production</small></div></section>
+
+        <section class="team-section"><div class="section-heading"><div><p class="label">Your team</p><h2>Who does what</h2></div><p>Registered identities live in Band. Each assignment runs through Crusoe and stops for your review.</p></div><div id="agent-list" class="agent-list"></div></section>
+
+        <section class="decision-section"><div class="section-heading"><div><p class="label">Decision desk</p><h2>Work waiting for you</h2></div><p>Approving here records your decision in this browser. Publishing and external delivery are not enabled.</p></div><div id="decision-list" class="decision-list"><p class="empty">No work is waiting. Assign a task to an agent above.</p></div></section>
+
+        <section class="activity-section"><div class="section-heading"><div><p class="label">Activity</p><h2>What happened</h2></div><button class="quiet" id="clear-activity" type="button">Clear local history</button></div><ol id="activity-list" class="activity-list"></ol></section>
+      </div>
+    </main>
+    <template id="agent-template"><article class="agent-row"><div class="agent-avatar" aria-hidden="true"></div><div class="agent-main"><div class="agent-title"><h3></h3><span class="state">Registered</span></div><p class="purpose"></p><p class="boundary"></p></div><div class="agent-control"><label>Assignment<textarea rows="2"></textarea></label><div><button class="run-agent primary" type="button">Assign task</button><button class="pause-agent quiet" type="button">Pause</button></div><small class="agent-note">Band identity ready · Human approval on</small></div></article></template>
+    <script type="module" src="dashboard.js"></script>
+  </body>
+</html>
