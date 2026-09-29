@@ -41,7 +41,7 @@ body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 "D
 .project-strip { padding: 25px 28px; display: flex; align-items: center; justify-content: space-between; gap: 30px; background: #e7eddf; border: 1px solid #bfc9b7; }
 .project-strip h2 { margin: 0; font-size: 25px; }
 .project-strip p:last-child { margin: 6px 0 0; color: #4f594b; }
-.project-stage { min-width: 260px; padding-left: 22px; border-left: 1px solid #9ca994; }
+.project-stage { min-width: 260px; padding: 12px 16px 12px 22px; border-left: 1px solid #9ca994; }
 .project-stage span, .project-stage small { display: block; color: #4f594b; font-size: 12px; }
 .project-stage b { display: block; margin: 3px 0; }
 .team-section, .decision-section, .activity-section { margin-top: 54px; }
@@ -53,7 +53,7 @@ body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 "D
 .agent-avatar { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid var(--ink); background: #e7eddf; font: 600 14px "DM Mono", monospace; }
 .agent-title { display: flex; align-items: center; gap: 12px; }
 .agent-title h3 { margin: 0; font-size: 20px; }
-.state { padding: 3px 8px; background: #e5eddd; color: #35551f; font: 12px "DM Mono", monospace; }
+.state { padding: 8px 10px; background: #e5eddd; color: #35551f; font: 12px "DM Mono", monospace; }
 .purpose { margin: 8px 0; color: #30342f; }
 .boundary { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
 .boundary::before { content: "Owner control: "; font-weight: 700; color: var(--ink); }
@@ -87,7 +87,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
   .overview > div:nth-child(-n + 2) { border-bottom: 1px solid var(--ink); }
   .access { grid-template-columns: 1fr; }
   .access > p:last-child { grid-column: auto; }
-  .project-stage { min-width: 0; padding: 16px 0 0; border-left: 0; border-top: 1px solid #9ca994; }
+  .project-stage { min-width: 0; padding: 16px; border-left: 0; border-top: 1px solid #9ca994; }
   .agent-row { grid-template-columns: 50px 1fr; }
   .agent-control { grid-column: 1 / -1; }
   .activity-list li { grid-template-columns: 1fr; gap: 3px; }
