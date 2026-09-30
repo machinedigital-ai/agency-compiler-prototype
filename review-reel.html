@@ -3,43 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Agency Compiler review reel</title>
+    <meta name="description" content="A playable Agency Compiler studio handoff demo." />
+    <title>Studio in motion - Agency Compiler</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet" />
     <style>
-      :root { --ink:#171917; --paper:#f4f6f1; --green:#497228; --acid:#d9ff3f; }
       * { box-sizing:border-box; }
-      body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.4 "DM Sans", sans-serif; }
-      [data-composition-id="review-reel"] { width:100vw; min-height:100dvh; display:grid; place-items:center; padding:32px; background:radial-gradient(circle at 78% 13%, #d9ff3f 0, transparent 24%), var(--paper); }
-      .reel-frame { width:min(1100px, 100%); min-height:620px; padding:8px; border:1px solid rgba(23,25,23,.18); background:rgba(255,255,255,.58); box-shadow:0 28px 70px rgba(73,114,40,.14); }
-      .reel-core { min-height:604px; padding:42px; display:grid; grid-template-columns:minmax(0, 1.5fr) minmax(240px, .65fr); gap:40px; background:#fff; box-shadow:inset 0 0 0 1px rgba(73,114,40,.08); }
-      .reel-kicker, .reel-meta { color:#51604c; font:500 13px "DM Mono", monospace; }
-      .reel-title { max-width:800px; margin:18px 0; font-size:clamp(42px, 7vw, 88px); line-height:.96; letter-spacing:-.05em; }
-      .reel-output { max-width:58ch; font-size:18px; white-space:pre-wrap; }
-      .reel-side { align-self:end; padding:24px; background:#eef3e9; }
-      .reel-side h2 { margin:8px 0; font-size:26px; line-height:1.08; }
-      .reel-side p { margin:0; color:#41503c; }
-      .reel-side a { display:inline-block; margin-top:22px; color:var(--ink); font-weight:700; text-underline-offset:4px; }
-      @media (max-width:720px) { [data-composition-id="review-reel"] { padding:16px; } .reel-core { min-height:0; padding:26px; grid-template-columns:1fr; } .reel-frame { min-height:0; } }
+      body { margin:0; overflow:hidden; background:#f4f6f1; color:#171917; font-family:"DM Sans",sans-serif; }
+      [data-composition-id="studio-demo"] { position:relative; width:100vw; height:100dvh; min-height:620px; overflow:hidden; background:#f4f6f1; }
+      .scene { position:absolute; inset:0; overflow:hidden; background:#f4f6f1; }
+      #scene-brief { z-index:4; } #scene-pod { z-index:3; opacity:0; } #scene-handoff { z-index:2; opacity:0; } #scene-owner { z-index:1; opacity:0; }
+      .glow { position:absolute; width:55vw; height:55vw; border-radius:50%; background:#d9ff3f; opacity:.58; filter:blur(72px); }
+      .scene-inner { position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr); width:min(1320px,calc(100% - 96px)); height:100%; margin:0 auto; padding:clamp(30px,5vw,80px) 0; gap:clamp(28px,6vw,90px); align-items:center; }
+      .eyebrow,.detail,.step { margin:0; color:#51604c; font:500 14px "DM Mono",monospace; letter-spacing:.02em; }
+      .step { display:flex; gap:11px; align-items:center; } .step::before { width:9px; height:9px; border-radius:50%; background:#497228; content:""; }
+      h1,h2,p { margin-top:0; } h1 { max-width:10ch; margin-bottom:24px; font-size:clamp(58px,8.2vw,140px); line-height:.86; letter-spacing:-.065em; } h2 { font-size:clamp(36px,4.6vw,74px); line-height:.92; letter-spacing:-.055em; }
+      .lead { max-width:42ch; margin-bottom:30px; color:#3f493c; font-size:clamp(19px,2vw,29px); line-height:1.25; }
+      .panel { padding:clamp(22px,3vw,42px); border:1px solid rgba(23,25,23,.17); background:#fff; box-shadow:0 26px 70px rgba(73,114,40,.14); }
+      .panel h3 { margin:12px 0 10px; font-size:clamp(25px,3vw,42px); line-height:.98; letter-spacing:-.045em; } .panel p:last-child { margin-bottom:0; color:#43513e; font-size:18px; }
+      .demo-controls { position:absolute; z-index:9; right:clamp(22px,4vw,62px); bottom:clamp(22px,4vw,52px); display:flex; align-items:center; gap:16px; }
+      .demo-controls button,.demo-controls a { min-height:48px; padding:13px 18px; border:1px solid #171917; color:#171917; background:#d9ff3f; font:600 15px "DM Sans",sans-serif; text-decoration:none; cursor:pointer; }
+      .demo-controls a { background:#fff; } .progress { position:absolute; z-index:9; right:clamp(22px,4vw,62px); bottom:calc(clamp(22px,4vw,52px) + 68px); width:150px; height:2px; background:rgba(23,25,23,.18); } .progress-fill { width:100%; height:100%; background:#497228; transform-origin:left center; }
+      .role-grid { display:grid; gap:12px; } .role { display:grid; grid-template-columns:42px 1fr; gap:15px; align-items:center; padding:17px; border:1px solid rgba(23,25,23,.16); background:#fff; }
+      .role-number { width:42px; height:42px; display:grid; place-items:center; background:#d9ff3f; font:500 13px "DM Mono",monospace; } .role strong { display:block; font-size:19px; } .role span { color:#53604e; font-size:15px; }
+      .connectors { position:absolute; inset:0; z-index:0; pointer-events:none; } .connectors i { position:absolute; width:34vw; height:1px; background:#497228; transform-origin:left center; } .connectors i:nth-child(1) { top:38%; left:12%; transform:rotate(22deg); } .connectors i:nth-child(2) { top:51%; left:18%; transform:rotate(-12deg); } .connectors i:nth-child(3) { top:64%; left:14%; transform:rotate(18deg); }
+      .handoff-list { display:grid; gap:14px; } .handoff { display:grid; grid-template-columns:76px 1fr auto; gap:16px; align-items:center; padding:18px 0; border-bottom:1px solid rgba(23,25,23,.18); } .handoff:last-child { border-bottom:0; } .handoff time { color:#497228; font:500 13px "DM Mono",monospace; } .handoff strong,.handoff span { display:block; } .handoff strong { font-size:18px; } .handoff span { color:#53604e; } .handoff b { color:#497228; font:500 12px "DM Mono",monospace; }
+      .approval { background:#d9ff3f; } .approval .detail { color:#30491d; } .approval .eyebrow { color:#4e5c49; } .approval-mark { width:94px; height:94px; display:grid; place-items:center; margin:24px 0; border:2px solid #171917; border-radius:50%; font-size:36px; } .owner-card { align-self:center; }
+      .transition-wipe { position:absolute; z-index:8; inset:0; opacity:0; background:#497228; pointer-events:none; }
+      @media (max-width:760px) { [data-composition-id="studio-demo"] { min-height:700px; } .scene-inner { grid-template-columns:1fr; width:min(100% - 44px,620px); padding:58px 0 110px; gap:22px; align-content:center; } h1 { font-size:clamp(52px,16vw,86px); } h2 { margin-bottom:14px; font-size:clamp(38px,11vw,60px); } .lead { font-size:19px; } .panel { padding:22px; } .panel p:last-child { font-size:16px; } .demo-controls { right:22px; bottom:22px; left:22px; justify-content:space-between; gap:9px; } .demo-controls button,.demo-controls a { min-height:44px; padding:11px 13px; font-size:14px; } .progress { right:22px; bottom:84px; left:22px; width:auto; } .role { padding:12px; } .handoff { grid-template-columns:58px 1fr; gap:10px; padding:11px 0; } .handoff b { display:none; } }
+      @media (prefers-reduced-motion:reduce) { .glow { filter:none; } }
     </style>
   </head>
   <body>
-    <div data-composition-id="review-reel" data-start="0" data-duration="8" data-track-index="1" data-width="1920" data-height="1080">
-      <div class="reel-frame"><div class="reel-core"><section><p class="reel-kicker">Agency Compiler review reel</p><h1 id="reel-title" class="reel-title">Work product</h1><p id="reel-output" class="reel-output">Open this reel from a saved work product.</p></section><aside class="reel-side"><p class="reel-meta" id="reel-agent">Owner review</p><h2 id="reel-state">Awaiting approval</h2><p>This is a visual review aid. It is not rendered campaign media or a delivered asset.</p><a id="reel-back" href="/dashboard">Back to dashboard</a></aside></div></div>
+    <div data-composition-id="studio-demo" data-start="0" data-duration="12" data-track-index="1" data-width="1920" data-height="1080">
+      <section id="scene-brief" class="scene" aria-label="Studio brief" data-layout-allow-overlap><div class="glow" data-layout-allow-overflow style="right:-18vw;top:-22vw"></div><div class="scene-inner"><div><p class="eyebrow">Agency Compiler / live studio run</p><h1>One brief. A studio in motion.</h1><p class="lead">The owner sets the ambition. The compiler assigns capabilities, sequences the handoffs, and keeps the final decision human.</p><p class="step">Trailer campaign / entertainment studio</p></div><aside class="panel"><p class="detail">Incoming brief</p><h3>Make a new sci-fi series feel impossible to ignore.</h3><p>One campaign promise, a trailer direction, and clear decision points—without asking the owner to manage a technical team.</p></aside></div></section>
+      <section id="scene-pod" class="scene" aria-label="Capability pod" data-layout-allow-overlap><div class="glow" data-layout-allow-overflow style="left:-24vw;bottom:-32vw"></div><div class="connectors"><i></i><i></i><i></i></div><div class="scene-inner"><div><p class="eyebrow">Capability pod / assembled from the brief</p><h2>Each role has a job, not just a model.</h2><p class="lead">Capabilities can be performed by AI, a human, a tool, or a hybrid team. The studio plans the work before it starts it.</p></div><div class="role-grid"><article class="role"><b class="role-number">01</b><div><strong>Creative direction</strong><span>Choose the campaign promise and visual north star.</span></div></article><article class="role"><b class="role-number">02</b><div><strong>Narrative strategy</strong><span>Turn the promise into a trailer story arc.</span></div></article><article class="role"><b class="role-number">03</b><div><strong>Production coordination</strong><span>Sequence deliverables and surface dependencies.</span></div></article></div></div></section>
+      <section id="scene-handoff" class="scene" aria-label="Coordinated handoffs" data-layout-allow-overlap><div class="glow" data-layout-allow-overflow style="right:-20vw;bottom:-29vw"></div><div class="scene-inner"><div><p class="eyebrow">Workflow / coordinated handoffs</p><h2>The studio passes context forward.</h2><p class="lead">Each output becomes structured input for the next capability. The owner sees what happened, what it cost, and what needs approval.</p></div><aside class="panel"><p class="detail">Today’s run / 00:01:42</p><div class="handoff-list"><div class="handoff"><time>00:00</time><div><strong>Brief interpreted</strong><span>Project archetype: trailer campaign</span></div><b>READY</b></div><div class="handoff"><time>00:18</time><div><strong>Promise selected</strong><span>Creative direction prepared</span></div><b>HANDOFF</b></div><div class="handoff"><time>00:43</time><div><strong>Workflow prepared</strong><span>Deliverables and gates sequenced</span></div><b>READY</b></div><div class="handoff"><time>01:42</time><div><strong>Owner decision surfaced</strong><span>Nothing publishes automatically</span></div><b>REVIEW</b></div></div></aside></div></section>
+      <section id="scene-owner" class="scene approval" aria-label="Owner approval" data-layout-allow-overlap><div class="scene-inner"><div><p class="eyebrow">Owner control / final gate</p><h2>The studio does the work. You direct the outcome.</h2><p class="lead">Approve, request a revision, or reassign a capability. The agent team stays observable and the work stays inside your control.</p></div><aside class="panel owner-card"><p class="detail">Approval gate / required</p><div class="approval-mark">✓</div><h3>Campaign direction ready for owner review.</h3><p>The next workflow stage begins only after an explicit decision.</p></aside></div></section>
+      <div id="transition-wipe" class="transition-wipe" aria-hidden="true"></div>
+      <div class="progress" aria-hidden="true"><div class="progress-fill"></div></div><div class="demo-controls"><a href="/dashboard">Back to dashboard</a><button id="play-demo" type="button">Play studio demo</button></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script>
-      const id = new URLSearchParams(location.search).get('id'); let state;
-      try { state = JSON.parse(localStorage.getItem('agency-owner-dashboard')); } catch {}
-      function render(run) { if (run) { document.querySelector('#reel-title').textContent = run.task; document.querySelector('#reel-output').textContent = run.output; document.querySelector('#reel-agent').textContent = `Prepared by ${run.agentName} using ${run.model?.modelLabel || 'the configured model'}`; document.querySelector('#reel-state').textContent = run.status.replaceAll('_', ' '); document.querySelector('#reel-back').href = `/artifact.html?id=${encodeURIComponent(run.id)}`; }
-      else { document.querySelector('#reel-title').textContent = 'No saved work product found.'; document.querySelector('#reel-output').textContent = 'This review reel only opens work saved by the local runtime. Return to the matching artifact and use its Open review reel link.'; document.querySelector('#reel-state').textContent = 'Choose an artifact'; } }
-      const localRun = state?.runs?.find(item => item.id === id); render(localRun);
-      if (id) fetch(`/api/artifacts?id=${encodeURIComponent(id)}`).then(response => response.ok ? response.json() : null).then(body => render(body?.run)).catch(() => {});
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused:true });
-      tl.from('.reel-frame', { opacity:0, y:28, duration:.65, ease:'expo.out', immediateRender:false }, .2).from('.reel-kicker', { opacity:0, x:-26, duration:.38, ease:'power3.out', immediateRender:false }, .38).from('.reel-title', { opacity:0, y:38, duration:.72, ease:'power4.out', immediateRender:false }, .48).from('.reel-output', { opacity:0, duration:.42, ease:'sine.out', immediateRender:false }, .72).from('.reel-side', { opacity:0, x:30, duration:.5, ease:'back.out(1.2)', immediateRender:false }, .86);
-      window.__timelines['review-reel'] = tl;
+      const from = (selector, vars, at) => tl.from(selector, { ...vars, immediateRender:false }, at);
+      from('#scene-brief .eyebrow', { opacity:0, x:-26, duration:.42, ease:'expo.out' }, .2); from('#scene-brief h1', { opacity:0, y:48, duration:.76, ease:'power4.out' }, .34); from('#scene-brief .lead', { opacity:0, y:18, duration:.5, ease:'sine.out' }, .7); from('#scene-brief .panel', { opacity:0, x:46, duration:.62, ease:'back.out(1.1)' }, .58);
+      tl.to('#scene-brief', { opacity:0, duration:.25, ease:'sine.inOut' }, 2.45).to('#transition-wipe', { opacity:1, duration:.25, ease:'sine.inOut' }, 2.45).fromTo('#scene-pod', { opacity:0 }, { opacity:1, duration:.25, ease:'sine.inOut' }, 2.7).to('#transition-wipe', { opacity:0, duration:.25, ease:'sine.inOut' }, 2.7);
+      from('#scene-pod .eyebrow', { opacity:0, x:-28, duration:.38, ease:'expo.out' }, 2.7); from('#scene-pod h2', { opacity:0, y:42, duration:.68, ease:'power4.out' }, 2.82); from('#scene-pod .lead', { opacity:0, y:18, duration:.45, ease:'sine.out' }, 3.12); from('#scene-pod .role', { opacity:0, x:48, duration:.46, stagger:.11, ease:'back.out(1.05)' }, 2.98);
+      tl.to('#scene-pod', { opacity:0, duration:.25, ease:'sine.inOut' }, 5.35).to('#transition-wipe', { opacity:1, duration:.25, ease:'sine.inOut' }, 5.35).fromTo('#scene-handoff', { opacity:0 }, { opacity:1, duration:.25, ease:'sine.inOut' }, 5.6).to('#transition-wipe', { opacity:0, duration:.25, ease:'sine.inOut' }, 5.6);
+      from('#scene-handoff .eyebrow', { opacity:0, x:-28, duration:.4, ease:'expo.out' }, 5.62); from('#scene-handoff h2', { opacity:0, y:40, duration:.68, ease:'power4.out' }, 5.75); from('#scene-handoff .lead', { opacity:0, y:16, duration:.44, ease:'sine.out' }, 6.03); from('#scene-handoff .panel', { opacity:0, x:48, duration:.56, ease:'back.out(1.05)' }, 5.88);
+      tl.to('#scene-handoff', { opacity:0, duration:.25, ease:'sine.inOut' }, 8.25).to('#transition-wipe', { opacity:1, duration:.25, ease:'sine.inOut' }, 8.25).fromTo('#scene-owner', { opacity:0 }, { opacity:1, duration:.25, ease:'sine.inOut' }, 8.5).to('#transition-wipe', { opacity:0, duration:.25, ease:'sine.inOut' }, 8.5);
+      from('#scene-owner .eyebrow', { opacity:0, x:-28, duration:.4, ease:'expo.out' }, 8.55); from('#scene-owner h2', { opacity:0, y:42, duration:.72, ease:'power4.out' }, 8.7); from('#scene-owner .lead', { opacity:0, y:18, duration:.46, ease:'sine.out' }, 9.04); from('#scene-owner .owner-card', { opacity:0, scale:.92, duration:.62, ease:'back.out(1.08)' }, 8.92);
+      tl.fromTo('.progress-fill', { scaleX:0 }, { scaleX:1, duration:12, ease:'none' }, 0);
+      window.__timelines['studio-demo'] = tl;
+      const button = document.querySelector('#play-demo');
+      button.addEventListener('click', () => { tl.restart().play(); button.textContent = 'Replay studio demo'; });
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { tl.progress(1).pause(); button.textContent = 'Show studio demo'; }
     </script>
   </body>
 </html>
