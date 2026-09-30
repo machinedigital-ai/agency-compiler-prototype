@@ -37,7 +37,7 @@
       else { document.querySelector('#reel-title').textContent = 'No saved work product found.'; document.querySelector('#reel-output').textContent = 'This review reel only opens work saved in this browser. Return to the matching artifact and use its Open review reel link.'; document.querySelector('#reel-state').textContent = 'Choose an artifact'; }
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused:true });
-      tl.from('.reel-frame', { opacity:0, y:28, duration:.65, ease:'expo.out' }, .2).from('.reel-kicker', { opacity:0, x:-26, duration:.38, ease:'power3.out' }, .38).from('.reel-title', { opacity:0, y:38, duration:.72, ease:'power4.out' }, .48).from('.reel-output', { opacity:0, duration:.42, ease:'sine.out' }, .72).from('.reel-side', { opacity:0, x:30, duration:.5, ease:'back.out(1.2)' }, .86);
+      tl.from('.reel-frame', { opacity:0, y:28, duration:.65, ease:'expo.out', immediateRender:false }, .2).from('.reel-kicker', { opacity:0, x:-26, duration:.38, ease:'power3.out', immediateRender:false }, .38).from('.reel-title', { opacity:0, y:38, duration:.72, ease:'power4.out', immediateRender:false }, .48).from('.reel-output', { opacity:0, duration:.42, ease:'sine.out', immediateRender:false }, .72).from('.reel-side', { opacity:0, x:30, duration:.5, ease:'back.out(1.2)', immediateRender:false }, .86);
       window.__timelines['review-reel'] = tl;
     </script>
   </body>
