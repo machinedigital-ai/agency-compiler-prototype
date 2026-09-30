@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Review an Agency Compiler work product." />
+    <title>Review work - Agency Compiler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="artifact.css" />
+  </head>
+  <body>
+    <main class="artifact-page">
+      <nav class="artifact-nav" aria-label="Artifact navigation"><a href="/dashboard">Back to dashboard</a><span>Owner review</span></nav>
+      <p id="artifact-status" class="artifact-status" role="status" aria-live="polite">Loading work product...</p>
+      <section id="artifact-view" class="artifact-view" hidden>
+        <header class="artifact-header"><div><p class="artifact-kicker">Work product</p><h1 id="artifact-title"></h1><p id="artifact-subtitle"></p></div><span id="artifact-state" class="artifact-state"></span></header>
+        <div class="artifact-layout">
+          <article class="artifact-bezel"><div class="artifact-core"><div class="artifact-provenance"><span id="artifact-agent"></span><span id="artifact-model"></span><span id="artifact-usage"></span></div><div id="artifact-output" class="artifact-output"></div><section id="owner-decision" class="owner-decision"><h2>Owner decision needed</h2><p id="artifact-decision"></p></section></div></article>
+          <aside class="review-panel"><p class="artifact-kicker">Your control</p><h2>Review before anything leaves the studio.</h2><p>The work remains in this browser until you make a decision. Approval does not publish or deliver it.</p><div class="review-actions"><button id="approve-work" class="approve-work" type="button">Approve work</button><button id="revise-work" class="revise-work" type="button">Request changes</button><a id="review-reel" class="reel-link" href="/review-reel.html">Open review reel</a></div><p id="review-note" class="review-note"></p></aside>
+        </div>
+      </section>
+      <section id="artifact-empty" class="artifact-empty" hidden><h1>No work product selected.</h1><p>Return to the dashboard and open an item that is waiting for your review.</p><a href="/dashboard">Go to dashboard</a></section>
+    </main>
+    <script type="module" src="artifact.js"></script>
+  </body>
+</html>

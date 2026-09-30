@@ -1,0 +1,37 @@
+:root { --ink:#171917; --paper:#f4f6f1; --surface:#fff; --line:#cbd3c5; --muted:#53604e; --green:#497228; --acid:#d9ff3f; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 "DM Sans", sans-serif; }
+.artifact-page { width:min(1200px, calc(100% - 48px)); margin:0 auto; padding:30px 0 90px; }
+.artifact-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:48px; color:var(--muted); font:500 12px "DM Mono", monospace; }
+.artifact-nav a { color:var(--ink); text-underline-offset:4px; }
+.artifact-status { padding:14px 16px; margin:0; border:1px solid #bfc9b7; background:#e7eddf; color:#3e493a; }
+.artifact-header { display:flex; justify-content:space-between; align-items:start; gap:32px; margin:42px 0 28px; }
+.artifact-kicker { margin:0 0 8px; color:var(--muted); font:500 12px "DM Mono", monospace; letter-spacing:.035em; }
+.artifact-header h1, .artifact-empty h1 { max-width:850px; margin:0; font-size:clamp(38px, 6vw, 70px); line-height:1; letter-spacing:-.04em; }
+.artifact-header p:last-child { max-width:640px; margin:12px 0 0; color:var(--muted); font-size:18px; }
+.artifact-state { flex:0 0 auto; margin-top:5px; padding:10px 12px; background:#e5eddd; color:#35551f; font:500 12px "DM Mono", monospace; text-transform:capitalize; }
+.artifact-layout { display:grid; grid-template-columns:minmax(0, 1.65fr) minmax(280px, .72fr); gap:28px; align-items:start; }
+.artifact-bezel { padding:7px; border:1px solid rgba(23,25,23,.18); background:rgba(255,255,255,.56); box-shadow:0 24px 60px rgba(73,114,40,.12); }
+.artifact-core { min-height:540px; padding:30px; background:var(--surface); box-shadow:inset 0 1px 0 rgba(255,255,255,.95), inset 0 0 0 1px rgba(73,114,40,.08); }
+.artifact-provenance { display:flex; flex-wrap:wrap; gap:8px 18px; padding-bottom:20px; border-bottom:1px solid var(--line); color:var(--muted); font:12px "DM Mono", monospace; }
+.artifact-output { max-width:65ch; padding:34px 0 28px; color:#252925; font-size:17px; }
+.artifact-output p { margin:0 0 19px; }
+.owner-decision { padding:22px; background:#eef3e9; color:#293323; }
+.owner-decision h2, .review-panel h2 { margin:0; font-size:22px; line-height:1.1; letter-spacing:-.02em; }
+.owner-decision p { margin:9px 0 0; }
+.review-panel { padding:28px; background:#e7eddf; box-shadow:inset 0 1px 0 rgba(255,255,255,.72); }
+.review-panel > p:not(.artifact-kicker):not(.review-note) { margin:13px 0 26px; color:#43513e; }
+.review-actions { display:grid; gap:10px; }
+.approve-work, .revise-work, .reel-link { min-height:46px; padding:12px 15px; border:1px solid var(--ink); color:var(--ink); font:600 14px "DM Sans", sans-serif; text-align:center; text-decoration:none; transition:transform .35s cubic-bezier(.32,.72,0,1), background-color .35s cubic-bezier(.32,.72,0,1); }
+.approve-work { background:var(--acid); cursor:pointer; }
+.revise-work, .reel-link { background:transparent; cursor:pointer; }
+.approve-work:hover, .revise-work:hover, .reel-link:hover { transform:translateY(-2px); background:#fff; }
+.approve-work:active, .revise-work:active, .reel-link:active { transform:translateY(0); }
+.approve-work:disabled, .revise-work:disabled { opacity:.52; cursor:not-allowed; transform:none; }
+.review-note { margin:16px 0 0; color:var(--muted); font-size:13px; }
+.artifact-empty { max-width:650px; padding:70px 0; }
+.artifact-empty p { color:var(--muted); font-size:18px; }
+.artifact-empty a { color:var(--ink); font-weight:700; text-underline-offset:4px; }
+button:focus-visible, a:focus-visible { outline:3px solid #526b16; outline-offset:3px; }
+@media (prefers-reduced-motion:no-preference) { .artifact-view { animation:artifact-in .6s cubic-bezier(.16,1,.3,1) both; } @keyframes artifact-in { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } } }
+@media (max-width:780px) { .artifact-page { width:min(100% - 32px, 1200px); padding-top:22px; } .artifact-nav, .artifact-header { align-items:start; flex-direction:column; gap:14px; } .artifact-header { margin:32px 0 24px; } .artifact-layout { grid-template-columns:1fr; } .artifact-core, .review-panel { padding:22px; } .artifact-output { font-size:16px; } }

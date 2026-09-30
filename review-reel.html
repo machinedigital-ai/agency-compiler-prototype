@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agency Compiler review reel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <style>
+      :root { --ink:#171917; --paper:#f4f6f1; --green:#497228; --acid:#d9ff3f; }
+      * { box-sizing:border-box; }
+      body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.4 "DM Sans", sans-serif; }
+      [data-composition-id="review-reel"] { width:100vw; min-height:100dvh; display:grid; place-items:center; padding:32px; background:radial-gradient(circle at 78% 13%, #d9ff3f 0, transparent 24%), var(--paper); }
+      .reel-frame { width:min(1100px, 100%); min-height:620px; padding:8px; border:1px solid rgba(23,25,23,.18); background:rgba(255,255,255,.58); box-shadow:0 28px 70px rgba(73,114,40,.14); }
+      .reel-core { min-height:604px; padding:42px; display:grid; grid-template-columns:minmax(0, 1.5fr) minmax(240px, .65fr); gap:40px; background:#fff; box-shadow:inset 0 0 0 1px rgba(73,114,40,.08); }
+      .reel-kicker, .reel-meta { color:#51604c; font:500 13px "DM Mono", monospace; }
+      .reel-title { max-width:800px; margin:18px 0; font-size:clamp(42px, 7vw, 88px); line-height:.96; letter-spacing:-.05em; }
+      .reel-output { max-width:58ch; font-size:18px; white-space:pre-wrap; }
+      .reel-side { align-self:end; padding:24px; background:#eef3e9; }
+      .reel-side h2 { margin:8px 0; font-size:26px; line-height:1.08; }
+      .reel-side p { margin:0; color:#41503c; }
+      .reel-side a { display:inline-block; margin-top:22px; color:var(--ink); font-weight:700; text-underline-offset:4px; }
+      @media (max-width:720px) { [data-composition-id="review-reel"] { padding:16px; } .reel-core { min-height:0; padding:26px; grid-template-columns:1fr; } .reel-frame { min-height:0; } }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="review-reel" data-start="0" data-duration="8" data-track-index="1" data-width="1920" data-height="1080">
+      <div class="reel-frame"><div class="reel-core"><section><p class="reel-kicker">Agency Compiler review reel</p><h1 id="reel-title" class="reel-title">Work product</h1><p id="reel-output" class="reel-output">Open this reel from a saved work product.</p></section><aside class="reel-side"><p class="reel-meta" id="reel-agent">Owner review</p><h2 id="reel-state">Awaiting approval</h2><p>This is a visual review aid. It is not rendered campaign media or a delivered asset.</p><a id="reel-back" href="/dashboard">Back to dashboard</a></aside></div></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      const id = new URLSearchParams(location.search).get('id'); let state;
+      try { state = JSON.parse(localStorage.getItem('agency-owner-dashboard')); } catch {}
+      const run = state?.runs?.find(item => item.id === id);
+      if (run) { document.querySelector('#reel-title').textContent = run.task; document.querySelector('#reel-output').textContent = run.output; document.querySelector('#reel-agent').textContent = `Prepared by ${run.agentName} using ${run.model?.modelLabel || 'the configured model'}`; document.querySelector('#reel-state').textContent = run.status.replaceAll('_', ' '); document.querySelector('#reel-back').href = `/artifact.html?id=${encodeURIComponent(run.id)}`; }
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused:true });
+      tl.from('.reel-frame', { opacity:0, y:28, duration:.65, ease:'expo.out' }, .2).from('.reel-kicker', { opacity:0, x:-26, duration:.38, ease:'power3.out' }, .38).from('.reel-title', { opacity:0, y:38, duration:.72, ease:'power4.out' }, .48).from('.reel-output', { opacity:0, duration:.42, ease:'sine.out' }, .72).from('.reel-side', { opacity:0, x:30, duration:.5, ease:'back.out(1.2)' }, .86);
+      window.__timelines['review-reel'] = tl;
+    </script>
+  </body>
+</html>

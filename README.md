@@ -10,7 +10,7 @@ A dependency-free, deployable prototype for the first Agency Compiler loop.
 4. Immutable Studio Model manifest preview
 5. Project classification, runtime project pod, workflow, artifacts, and approval gates
 6. Simulated success-profile telemetry
-7. Owner dashboard for assigning, pausing, reviewing, and approving agent work
+7. Owner dashboard plus artifact viewer for assigning, reviewing, and approving agent work
 
 ## Run and verify
 
@@ -30,7 +30,7 @@ docker run --env-file .env.local -p 4174:4174 agency-compiler
 
 ## Real vs mocked
 
-The onboarding, edits, Studio Model compilation, Band agent roster, Crusoe model calls, approval controls, and browser persistence are real. The knowledge bases, project classification, execution telemetry, project status, and long-term run history are seeded or local-only. The demo is intentionally public: its server endpoints use shared Crusoe credits without sign-in. Add production authentication and server-side rate limiting before sharing it widely.
+The onboarding, edits, Studio Model compilation, Band agent roster, Crusoe model calls, artifact viewer, approval controls, and browser persistence are real. The review reel is a visual aid, not rendered campaign media. The knowledge bases, project classification, execution telemetry, project status, and long-term run history are seeded or local-only. The demo is intentionally public: its server endpoints use shared Crusoe credits without sign-in. Add production authentication and server-side rate limiting before sharing it widely.
 
 ## Runtime boundaries
 

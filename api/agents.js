@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     const response = await fetch('https://api.inference.crusoecloud.com/v1/chat/completions', { method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.CRUSOE_API_KEY}` },
       body: JSON.stringify({ model: policy.model, temperature: 0.3, max_tokens: 512, chat_template_kwargs: { enable_thinking: false },
-        messages: [{ role: 'system', content: `You are the ${agent.shortName} in a three-person virtual creative team. Purpose: ${agent.purpose} Boundary: ${agent.boundary} Produce a concise, concrete work product under 220 words. Do not claim you used tools, published, purchased, contacted anyone, rendered media, or completed real-world actions. End with "OWNER DECISION NEEDED:" followed by one specific choice.` },
+        messages: [{ role: 'system', content: `You are the ${agent.shortName} in a three-person virtual creative team. Purpose: ${agent.purpose} Boundary: ${agent.boundary} Produce a concise, concrete work product under 220 words. Use plain-text headings, not Markdown. Do not claim you used tools, published, purchased, contacted anyone, rendered media, or completed real-world actions. End with "OWNER DECISION NEEDED:" followed by one specific choice.` },
           { role: 'user', content: `PROJECT BRIEF:\n${brief}\n\nASSIGNED TASK:\n${task}` }] }), signal: AbortSignal.timeout(55000) });
     if (!response.ok) throw Object.assign(new Error(response.status === 429 ? 'Crusoe is rate limiting requests. Wait before retrying.' : `Crusoe request failed (HTTP ${response.status}).`), { status: response.status === 429 ? 429 : 502 });
     const completion = await response.json();

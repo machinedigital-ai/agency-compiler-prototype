@@ -4,7 +4,7 @@ import compileHandler from './api/compile.js';
 import agentHandler from './api/agents.js';
 
 // Explicit public file list prevents serving local secrets or source/test files.
-const assets = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'], '/styles.css': ['styles.css', 'text/css'], '/app.js': ['app.js', 'text/javascript'], '/logic.js': ['logic.js', 'text/javascript'], '/dashboard': ['dashboard.html', 'text/html'], '/dashboard.html': ['dashboard.html', 'text/html'], '/dashboard.css': ['dashboard.css', 'text/css'], '/dashboard.js': ['dashboard.js', 'text/javascript'] };
+const assets = { '/': ['index.html', 'text/html'], '/index.html': ['index.html', 'text/html'], '/styles.css': ['styles.css', 'text/css'], '/app.js': ['app.js', 'text/javascript'], '/logic.js': ['logic.js', 'text/javascript'], '/dashboard': ['dashboard.html', 'text/html'], '/dashboard.html': ['dashboard.html', 'text/html'], '/dashboard.css': ['dashboard.css', 'text/css'], '/dashboard.js': ['dashboard.js', 'text/javascript'], '/artifact.html': ['artifact.html', 'text/html'], '/artifact.css': ['artifact.css', 'text/css'], '/artifact.js': ['artifact.js', 'text/javascript'], '/review-reel.html': ['review-reel.html', 'text/html'] };
 const host = process.env.HOST || '127.0.0.1';
 const port = Number(process.env.PORT || 4174);
 createServer(async (req, res) => {
