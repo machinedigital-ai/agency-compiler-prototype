@@ -2,7 +2,6 @@ const $ = selector => document.querySelector(selector);
 let state;
 try { state = JSON.parse(localStorage.getItem('agency-owner-dashboard')); } catch {}
 if (!state || !Array.isArray(state.runs) || !Array.isArray(state.activity) || !Array.isArray(state.paused)) state = { runs: [], activity: [], paused: [] };
-let code = sessionStorage.getItem('agency-demo-code') || '';
 let agents = [];
 const defaultBrief = 'Create a launch trailer campaign for an original sci-fi series. Deliver a 90-second master trailer, 30s and 15s cutdowns, campaign key art frames, and a social rollout package. Launch in six weeks.';
 
@@ -24,22 +23,23 @@ function renderAgents() {
   renderStats();
 }
 async function loadAgents() {
-  $('#access-status').textContent='Connecting to your Band roster…';
-  const response=await fetch('/api/agents',{headers:{'x-demo-access-code':code}}); const body=await response.json();
-  if(!response.ok) throw new Error(body.error||'Could not load agents.');
-  agents=body.agents; sessionStorage.setItem('agency-demo-code',code); $('#access-panel').hidden=true; $('#owner-view').hidden=false; renderAgents(); renderDecisions(); renderActivity(); $('#access-status').textContent='';
+  const button=$('#refresh-button'); button.disabled=true; $('#dashboard-status').textContent='Connecting to your Band roster…';
+  try {
+    const response=await fetch('/api/agents'); const body=await response.json();
+    if(!response.ok) throw new Error(body.error||'Could not load agents.');
+    agents=body.agents; renderAgents(); renderDecisions(); renderActivity(); $('#dashboard-status').textContent=`${agents.length} agents connected · Live assignments are ready.`;
+  } finally { button.disabled=false; }
 }
-$('#unlock-button').addEventListener('click',async()=>{code=$('#dashboard-code').value.trim();try{await loadAgents();}catch(error){$('#access-status').textContent=error.message;}});
-$('#refresh-button').addEventListener('click',async()=>{if(!code){$('#access-panel').hidden=false;$('#dashboard-code').focus();return;}try{await loadAgents();log('Refreshed the Band agent roster.');}catch(error){alert(error.message);}});
+$('#refresh-button').addEventListener('click',async()=>{try{await loadAgents();log('Refreshed the Band agent roster.');}catch(error){$('#dashboard-status').textContent=error.message;}});
 $('#agent-list').addEventListener('click',async event=>{
   const row=event.target.closest('.agent-row'); if(!row)return; const agent=agents.find(item=>item.id===row.dataset.agent);
   if(event.target.closest('.pause-agent')){const paused=state.paused.includes(agent.id);state.paused=paused?state.paused.filter(id=>id!==agent.id):[...state.paused,agent.id];save();log(`${agent.shortName} ${paused?'resumed':'paused'} by owner.`);renderAgents();return;}
   if(!event.target.closest('.run-agent'))return;
   const task=row.querySelector('textarea').value.trim(); if(!task)return;
   row.classList.add('is-working');row.querySelector('.state').textContent='Working';document.querySelectorAll('.run-agent').forEach(button=>button.disabled=true);renderStats();log(`${agent.shortName} started: ${task}`);
-  try{const response=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json','x-demo-access-code':code},body:JSON.stringify({agentId:agent.id,task,brief:defaultBrief}),signal:AbortSignal.timeout(65000)});const body=await response.json();if(!response.ok)throw new Error(body.error||'Agent run failed.');state.runs.unshift(body.run);save();log(`${agent.shortName} finished and is waiting for your approval.`);renderDecisions();}
+  try{const response=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agentId:agent.id,task,brief:defaultBrief}),signal:AbortSignal.timeout(65000)});const body=await response.json();if(!response.ok)throw new Error(body.error||'Agent run failed.');state.runs.unshift(body.run);save();log(`${agent.shortName} finished and is waiting for your approval.`);renderDecisions();}
   catch(error){log(`${agent.shortName} stopped: ${error.name==='TimeoutError'?'request timed out':error.message}`);alert(error.message);} finally{renderAgents();}
 });
 $('#decision-list').addEventListener('click',event=>{const card=event.target.closest('.decision');if(!card)return;const run=state.runs.find(item=>item.id===card.dataset.run);if(event.target.closest('.approve')){run.status='approved';log(`Owner approved ${run.agentName}'s work: ${run.task}`);}else if(event.target.closest('.revise')){run.status='revision_requested';log(`Owner requested changes from ${run.agentName}: ${run.task}`);}else return;save();renderDecisions();});
 $('#clear-activity').addEventListener('click',()=>{state.activity=[];save();renderActivity();});
-renderActivity();renderDecisions();if(code)loadAgents().catch(()=>{$('#access-panel').hidden=false;$('#owner-view').hidden=true;});
+renderActivity();renderDecisions();loadAgents().catch(error=>{$('#dashboard-status').textContent=error.message;});

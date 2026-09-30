@@ -26,12 +26,7 @@ body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 "D
 .primary { background: var(--acid); color: var(--ink); }
 .quiet { background: transparent; }
 .primary:disabled, .quiet:disabled { opacity: .45; cursor: not-allowed; }
-.access { padding: 26px; display: grid; grid-template-columns: 1.2fr 1fr auto; align-items: end; gap: 22px; background: var(--ink); color: #fff; }
-.access h2, .access p { margin: 0; }
-.access p { color: #eef1ec; }
-.access label { font-size: 13px; }
-.access input { width: 100%; display: block; margin-top: 7px; padding: 10px; border: 1px solid #626762; background: #252825; color: #fff; font: 16px "DM Sans", sans-serif; }
-.access > p:last-child { grid-column: 1 / -1; color: #ffcc75; }
+.dashboard-status { margin: -14px 0 30px; padding: 12px 16px; border: 1px solid #bfc9b7; background: #e7eddf; color: #3e493a; }
 .overview { margin: 30px 0; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--ink); }
 .overview > div { padding: 20px; border-right: 1px solid var(--ink); }
 .overview > div:last-child { border: 0; }
@@ -85,8 +80,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
   .overview { grid-template-columns: 1fr 1fr; }
   .overview > div:nth-child(2) { border-right: 0; }
   .overview > div:nth-child(-n + 2) { border-bottom: 1px solid var(--ink); }
-  .access { grid-template-columns: 1fr; }
-  .access > p:last-child { grid-column: auto; }
   .project-stage { min-width: 0; padding: 16px; border-left: 0; border-top: 1px solid #9ca994; }
   .agent-row { grid-template-columns: 50px 1fr; }
   .agent-control { grid-column: 1 / -1; }

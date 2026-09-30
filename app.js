@@ -57,19 +57,16 @@ renderStudio();
 
 $('#live-button').addEventListener('click', async () => {
   const button = $('#live-button');
-  const code = $('#access-code').value.trim();
-  if (!code) { $('#live-status').textContent = 'Enter your private demo access code first.'; $('#access-code').focus(); return; }
   button.disabled = true;
   $('#live-status').textContent = 'Calling Crusoe · generating your studio, project plan, and draft…';
   try {
-    const response = await fetch('/api/compile', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-demo-access-code': code },
+    const response = await fetch('/api/compile', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ studioName: $('#studio-name').value, focus: $('#studio-focus').value, teamSize: Number($('#team-size').value), brief: $('#project-brief').value }),
       signal: AbortSignal.timeout(65000) });
     let result;
     try { result = await response.json(); } catch { throw new Error('Live API unavailable. Open the latest deployment or use npm run dev.'); }
     if (!response.ok) throw new Error(result.error || 'Generation failed.');
     liveResult = result;
-    sessionStorage.setItem('agency-demo-code', code);
     studio = { studioName: result.input.studioName, teamSize: result.input.teamSize, focus: result.input.focus, ...result.studio,
       generation: result.generation,
       evidence: [

@@ -1,4 +1,4 @@
-import { randomUUID, timingSafeEqual } from 'node:crypto';
+import { randomUUID } from 'node:crypto';
 
 const MODEL = 'nvidia/Nemotron-3.5-Lightning-30B-A3B';
 const INPUT_USD_PER_MILLION = 0.05;
@@ -10,12 +10,6 @@ const PURPOSES = {
   'Northstar Visual Artist': { shortName: 'Visual Artist', purpose: 'Develops key-art directions and adapts approved visuals for campaign formats.', assignment: 'Develop three key-art directions', boundary: 'Cannot buy assets, publish work, or modify protected source files.' }
 };
 
-function authorized(req) {
-  const secret = process.env.DEMO_ACCESS_CODE;
-  const supplied = Buffer.from(String(req.headers['x-demo-access-code'] || ''));
-  const expected = Buffer.from(secret || '');
-  return secret && supplied.length === expected.length && timingSafeEqual(supplied, expected);
-}
 function json(res, status, data) { return res.status(status).json(data); }
 async function listBandAgents() {
   const response = await fetch(BAND_URL, { headers: { 'X-API-Key': process.env.BAND_API_KEY }, signal: AbortSignal.timeout(15000) });
@@ -28,7 +22,6 @@ async function listBandAgents() {
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
-  if (!authorized(req)) return json(res, 401, { error: 'Enter the private demo access code to view and control agents.' });
   if (!process.env.BAND_API_KEY) return json(res, 503, { error: 'Band is not configured on this deployment.' });
   try {
     const agents = await listBandAgents();

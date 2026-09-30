@@ -13,7 +13,7 @@
   <body>
     <header class="topbar">
       <a class="brand" href="#top"><span class="mark">A/</span> AGENCY COMPILER <em>prototype</em></a>
-      <div class="status"><span></span> local demo · saved in this browser</div>
+      <nav class="topnav" aria-label="Primary"><a href="/dashboard">Owner dashboard</a><div class="status"><span></span> public demo · no sign-in required</div></nav>
     </header>
     <main id="top">
       <section class="hero">
@@ -25,12 +25,11 @@
 
       <section class="section" id="live-compiler">
         <h2>Try a real compilation.</h2>
-        <p>Use the studio details and project brief below to generate a studio structure, project plan, and first draft artifact with Gemma 4 through Crusoe.</p>
-        <label>Private demo access code<input id="access-code" type="password" autocomplete="off" placeholder="Enter the demo code, not your Crusoe API key" /></label>
+        <p>Use the studio details and project brief below to generate a studio structure, project plan, and first draft artifact with Gemma 4 through Crusoe. No sign-in or access code required.</p>
         <button class="button primary" id="live-button" type="button">Generate live sample <b>→</b></button>
         <button class="button outline" id="download-button" type="button" hidden>Download generated model</button>
         <a class="button dark" id="dashboard-link" href="/dashboard">Open owner dashboard <b>→</b></a>
-        <p id="live-status" role="status" aria-live="polite">One request per click. Output capped at 2,400 tokens. The controls below also support a free seeded demo.</p>
+        <p id="live-status" role="status" aria-live="polite">Public demo using shared credits. One request per click; output is capped at 2,400 tokens. The controls below also support a free seeded demo.</p>
       </section>
 
       <section class="section split" id="onboarding">

@@ -15,9 +15,9 @@
     <main class="dashboard">
       <section class="welcome"><div><p class="label">Northstar Entertainment</p><h1>Your agency at work.</h1><p>See what each agent is for, assign work, and make every decision that matters.</p></div><button class="primary" id="refresh-button" type="button">Refresh team</button></section>
 
-      <section class="access" id="access-panel"><div><h2>Unlock your private dashboard</h2><p>This code protects your Crusoe credits and Band agent roster.</p></div><label>Access code<input id="dashboard-code" type="password" autocomplete="off" /></label><button class="primary" id="unlock-button" type="button">Open dashboard</button><p id="access-status" role="status"></p></section>
+      <p class="dashboard-status" id="dashboard-status" role="status" aria-live="polite">Loading your agents…</p>
 
-      <div id="owner-view" hidden>
+      <div id="owner-view">
         <section class="overview" aria-label="Agency status">
           <div><span>Agents</span><b id="agent-count">—</b><small>registered in Band</small></div>
           <div><span>Working now</span><b id="working-count">0</b><small>live assignments</small></div>

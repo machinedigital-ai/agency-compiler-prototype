@@ -17,8 +17,8 @@ test('input and provider output validation reject malformed plans', () => {
 
 test('handler guards billing, bounds requests, reports usage, and exposes no upstream secrets', async () => {
   const oldFetch = globalThis.fetch;
-  const oldKey = process.env.CRUSOE_API_KEY, oldCode = process.env.DEMO_ACCESS_CODE;
-  process.env.CRUSOE_API_KEY = 'test-provider-secret'; process.env.DEMO_ACCESS_CODE = 'test-demo-code';
+  const oldKey = process.env.CRUSOE_API_KEY;
+  process.env.CRUSOE_API_KEY = 'test-provider-secret';
   let calls = 0, upstreamStatus = 200, completion = { choices:[{finish_reason:'stop',message:{content:JSON.stringify(plan)}}],usage:{prompt_tokens:1000,completion_tokens:1000} };
   globalThis.fetch = async (url, options) => {
     calls++;
@@ -27,12 +27,11 @@ test('handler guards billing, bounds requests, reports usage, and exposes no ups
     assert.equal(body.max_tokens, MAX_OUTPUT);
     return new Response(JSON.stringify(upstreamStatus === 200 ? completion : {error:'test-provider-secret'}), {status:upstreamStatus});
   };
-  async function request(body = input, headers = {'x-demo-access-code':'test-demo-code'}, method = 'POST') {
+  async function request(body = input, headers = {}, method = 'POST') {
     const res = { code:200, setHeader(){}, status(code){this.code=code;return this;}, json(data){this.data=data;return this;} };
     await handler({method,headers,body},res); return res;
   }
   try {
-    assert.equal((await request(input,{})).code,401);
     assert.equal((await request({...input,brief:''})).code,400);
     assert.equal((await request('{broken')).code,400);
     assert.equal((await request(input,{},'GET')).code,405);
@@ -46,6 +45,5 @@ test('handler guards billing, bounds requests, reports usage, and exposes no ups
   } finally {
     globalThis.fetch=oldFetch;
     if(oldKey===undefined) delete process.env.CRUSOE_API_KEY; else process.env.CRUSOE_API_KEY=oldKey;
-    if(oldCode===undefined) delete process.env.DEMO_ACCESS_CODE; else process.env.DEMO_ACCESS_CODE=oldCode;
   }
 });

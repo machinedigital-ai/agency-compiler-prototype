@@ -21,9 +21,16 @@ npm run dev
 vercel deploy . -y
 ```
 
+For a persistent hosted agent runtime:
+
+```sh
+docker build -t agency-compiler .
+docker run --env-file .env.local -p 4174:4174 agency-compiler
+```
+
 ## Real vs mocked
 
-The onboarding, edits, Studio Model compilation, Band agent roster, Crusoe model calls, approval controls, and browser persistence are real. The knowledge bases, project classification, execution telemetry, project status, and long-term run history are seeded or local-only. The access-code gate is suitable for a private demo, not production authentication.
+The onboarding, edits, Studio Model compilation, Band agent roster, Crusoe model calls, approval controls, and browser persistence are real. The knowledge bases, project classification, execution telemetry, project status, and long-term run history are seeded or local-only. The demo is intentionally public: its server endpoints use shared Crusoe credits without sign-in. Add production authentication and server-side rate limiting before sharing it widely.
 
 ## Runtime boundaries
 

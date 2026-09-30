@@ -1,5 +1,3 @@
-import { timingSafeEqual } from 'node:crypto';
-
 export const MODEL = 'google/gemma-4-31b-it';
 export const MAX_OUTPUT = 2400;
 const SYSTEM = `You compile operating configurations for creative studios. Return ONLY a JSON object, no markdown fences.
@@ -46,11 +44,7 @@ export function validateOutput(value) {
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ error: 'Use POST.' }); }
-  const secret = process.env.DEMO_ACCESS_CODE;
-  if (!secret || !process.env.CRUSOE_API_KEY) return res.status(503).json({ error: 'Live generation is not configured on this deployment.' });
-  const supplied = Buffer.from(String(req.headers['x-demo-access-code'] || ''));
-  const expected = Buffer.from(secret);
-  if (supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) return res.status(401).json({ error: 'Enter the private demo access code to use live generation.' });
+  if (!process.env.CRUSOE_API_KEY) return res.status(503).json({ error: 'Live generation is not configured on this deployment.' });
   try {
     if (Number(req.headers['content-length'] || 0) > 16000) throw fail('Request too large.', 413);
     let body = req.body;
