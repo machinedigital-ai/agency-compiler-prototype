@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { MODEL as STUDIO_COMPILER_MODEL } from './compile.js';
+import { saveArtifact } from './artifacts.js';
 
 export const MODEL_POLICIES = {
   balanced: { id: 'balanced', label: 'Balanced', model: 'nvidia/Nemotron-3.5-Lightning-30B-A3B', modelLabel: 'Nemotron 3.5 Lightning', inputUsdPerMillion: 0.05, outputUsdPerMillion: 0.20 },
@@ -52,9 +53,11 @@ export default async function handler(req, res) {
     if (!output) throw Object.assign(new Error('The agent returned no work product.'), { status: 502 });
     const usage = completion.usage;
     const cost = usage ? (usage.prompt_tokens * policy.inputUsdPerMillion + usage.completion_tokens * policy.outputUsdPerMillion) / 1e6 : null;
-    return json(res, 200, { run: { id: randomUUID(), agentId: agent.id, agentName: agent.shortName, task, output,
+    const run = { id: randomUUID(), agentId: agent.id, agentName: agent.shortName, task, output,
       status: 'awaiting_approval', createdAt: new Date().toISOString(), durationMs: Date.now() - started,
-      model: publicPolicy(policy), usage: usage ? { inputTokens: usage.prompt_tokens, outputTokens: usage.completion_tokens, estimatedUsd: cost } : null } });
+      model: publicPolicy(policy), usage: usage ? { inputTokens: usage.prompt_tokens, outputTokens: usage.completion_tokens, estimatedUsd: cost } : null };
+    await saveArtifact(run);
+    return json(res, 200, { run });
   } catch (error) {
     const timeout = ['TimeoutError', 'AbortError'].includes(error.name);
     return json(res, error.status || (timeout ? 504 : 502), { error: timeout ? 'The agent timed out. No automatic retry was made.' : error.message || 'Agent service unavailable.' });

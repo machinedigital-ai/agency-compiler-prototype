@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import handler from '../api/agents.js';
+import { rm } from 'node:fs/promises';
+
+process.env.AGENT_ARTIFACT_STORE_PATH = 'work/test-agent-api-artifacts.json';
+const { default: handler } = await import('../api/agents.js');
 
 const bandAgent = { id: 'agent-1', name: 'Northstar Creative Director', description: 'Owns campaign intent.' };
 
@@ -51,6 +54,7 @@ test('public agent endpoint reads Band and runs approved Crusoe work', async () 
     assert.ok(!JSON.stringify(result.data).includes('test-crusoe-key'));
   } finally {
     globalThis.fetch = oldFetch;
+    await rm(process.env.AGENT_ARTIFACT_STORE_PATH, { force: true });
     if (oldBand === undefined) delete process.env.BAND_API_KEY; else process.env.BAND_API_KEY = oldBand;
     if (oldCrusoe === undefined) delete process.env.CRUSOE_API_KEY; else process.env.CRUSOE_API_KEY = oldCrusoe;
   }

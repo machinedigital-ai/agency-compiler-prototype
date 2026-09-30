@@ -3,7 +3,7 @@ const id = new URLSearchParams(location.search).get('id');
 let state;
 try { state = JSON.parse(localStorage.getItem('agency-owner-dashboard')); } catch {}
 if (!state || !Array.isArray(state.runs) || !Array.isArray(state.activity)) state = { runs: [], activity: [] };
-const run = state.runs.find(item => item.id === id);
+let run = state.runs.find(item => item.id === id);
 
 function save() { localStorage.setItem('agency-owner-dashboard', JSON.stringify(state)); }
 function log(message) { state.activity.unshift({ at: new Date().toISOString(), message }); state.activity = state.activity.slice(0, 40); save(); }
@@ -34,6 +34,8 @@ function render() {
   $('#approve-work').disabled = !waiting; $('#revise-work').disabled = !waiting;
   $('#review-note').textContent = waiting ? 'Choose one outcome. You can return to the dashboard at any time.' : `This work is marked ${run.status.replaceAll('_', ' ')} in this browser.`;
 }
-$('#approve-work').addEventListener('click', () => { if (run?.status !== 'awaiting_approval') return; run.status = 'approved'; log(`Owner approved ${run.agentName}'s work: ${run.task}`); render(); });
-$('#revise-work').addEventListener('click', () => { if (run?.status !== 'awaiting_approval') return; run.status = 'revision_requested'; log(`Owner requested changes from ${run.agentName}: ${run.task}`); render(); });
-render();
+async function decide(status) { if (run?.status !== 'awaiting_approval') return; const response = await fetch(`/api/artifacts?id=${encodeURIComponent(run.id)}`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({status}) }); const body = await response.json(); if (!response.ok) { $('#review-note').textContent = body.error || 'Could not record your decision.'; return; } run = body.run; state.runs = [run, ...state.runs.filter(item => item.id !== run.id)]; log(`Owner ${status === 'approved' ? 'approved' : 'requested changes from'} ${run.agentName}: ${run.task}`); render(); }
+$('#approve-work').addEventListener('click', () => decide('approved'));
+$('#revise-work').addEventListener('click', () => decide('revision_requested'));
+async function load() { try { if (id) { const response = await fetch(`/api/artifacts?id=${encodeURIComponent(id)}`); if (response.ok) run = (await response.json()).run; } } catch {} render(); }
+load();

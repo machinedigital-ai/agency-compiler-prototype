@@ -36,8 +36,9 @@ function renderAgents() {
 async function loadAgents() {
   const button=$('#refresh-button'); button.disabled=true; $('#dashboard-status').textContent='Connecting to your Band roster…';
   try {
-    const response=await fetch('/api/agents'); const body=await response.json();
+    const [response, artifactResponse] = await Promise.all([fetch('/api/agents'), fetch('/api/artifacts')]); const body=await response.json();
     if(!response.ok) throw new Error(body.error||'Could not load agents.');
+    if (artifactResponse.ok) { const artifacts = await artifactResponse.json(); state.runs = artifacts.runs; save(); }
     agents=body.agents; runtime=body.runtime; renderModels(); renderAgents(); renderDecisions(); renderActivity(); $('#dashboard-status').textContent=`${agents.length} agents connected · Live assignments are ready.`;
   } finally { button.disabled=false; }
 }
@@ -51,7 +52,7 @@ $('#agent-list').addEventListener('click',async event=>{
   try{const response=await fetch('/api/agents',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({agentId:agent.id,task,brief:defaultBrief,policy:state.modelPolicy}),signal:AbortSignal.timeout(65000)});const body=await response.json();if(!response.ok)throw new Error(body.error||'Agent run failed.');state.runs.unshift(body.run);save();log(`${agent.shortName} finished with ${body.run.model.modelLabel} and is waiting for your approval.`);renderDecisions();}
   catch(error){log(`${agent.shortName} stopped: ${error.name==='TimeoutError'?'request timed out':error.message}`);alert(error.message);} finally{renderAgents();}
 });
-$('#decision-list').addEventListener('click',event=>{const card=event.target.closest('.decision');if(!card)return;const run=state.runs.find(item=>item.id===card.dataset.run);if(event.target.closest('.approve')){run.status='approved';log(`Owner approved ${run.agentName}'s work: ${run.task}`);}else if(event.target.closest('.revise')){run.status='revision_requested';log(`Owner requested changes from ${run.agentName}: ${run.task}`);}else return;save();renderDecisions();});
+$('#decision-list').addEventListener('click',async event=>{const card=event.target.closest('.decision');if(!card)return;const run=state.runs.find(item=>item.id===card.dataset.run);const status=event.target.closest('.approve')?'approved':event.target.closest('.revise')?'revision_requested':null;if(!status)return;const response=await fetch(`/api/artifacts?id=${encodeURIComponent(run.id)}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});const body=await response.json();if(!response.ok){alert(body.error||'Could not record your decision.');return;}Object.assign(run,body.run);log(`Owner ${status === 'approved' ? 'approved' : 'requested changes from'} ${run.agentName}: ${run.task}`);save();renderDecisions();});
 $('#clear-activity').addEventListener('click',()=>{state.activity=[];save();renderActivity();});
 $('#model-policy').addEventListener('change',event=>{state.modelPolicy=event.target.value;save();const policy=selectedPolicy();renderModels();renderAgents();log(`Team run mode changed to ${policy.modelLabel}.`);});
 renderActivity();renderDecisions();loadAgents().catch(error=>{$('#dashboard-status').textContent=error.message;});
