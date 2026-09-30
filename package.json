@@ -4,6 +4,6 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env.local server.mjs",
-    "verify": "node --check logic.js && node --check app.js && node --check dashboard.js && node --check api/compile.js && node --check api/agents.js && node logic.js && node --test test/*.test.js"
+    "verify": "node --check logic.js && node --check app.js && node --check dashboard.js && node --check server.mjs && node --check api/compile.js && node --check api/agents.js && node logic.js && node --test test/*.test.js"
   }
 }

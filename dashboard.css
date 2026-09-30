@@ -27,6 +27,11 @@ body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 "D
 .quiet { background: transparent; }
 .primary:disabled, .quiet:disabled { opacity: .45; cursor: not-allowed; }
 .dashboard-status { margin: -14px 0 30px; padding: 12px 16px; border: 1px solid #bfc9b7; background: #e7eddf; color: #3e493a; }
+.model-strip { margin: 0 0 30px; padding: 20px 22px; display: flex; align-items: center; justify-content: space-between; gap: 28px; border: 1px solid var(--ink); background: var(--panel); }
+.model-strip h2 { margin: 0; font-size: 20px; letter-spacing: -.02em; }
+.model-strip p { max-width: 700px; margin: 5px 0 0; color: var(--muted); font-size: 14px; }
+.model-choice { display: grid; gap: 5px; min-width: 280px; font-size: 12px; font-weight: 600; }
+.model-choice select { min-height: 42px; padding: 9px 10px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font: 14px "DM Sans", sans-serif; }
 .overview { margin: 30px 0; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--ink); }
 .overview > div { padding: 20px; border-right: 1px solid var(--ink); }
 .overview > div:last-child { border: 0; }
@@ -71,12 +76,13 @@ body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 "D
 .activity-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
 .activity-list li { padding: 13px 0; display: grid; grid-template-columns: 130px 1fr; gap: 20px; border-bottom: 1px solid var(--line); }
 .activity-list time { color: var(--muted); font: 12px "DM Mono", monospace; }
-button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid #526b16; outline-offset: 3px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid #526b16; outline-offset: 3px; }
 
 @media (max-width: 800px) {
   .dash-header nav a { display: none; }
   .dashboard { padding-top: 32px; }
-  .welcome, .section-heading, .project-strip { align-items: start; flex-direction: column; }
+  .welcome, .section-heading, .project-strip, .model-strip { align-items: start; flex-direction: column; }
+  .model-choice { width: 100%; min-width: 0; }
   .overview { grid-template-columns: 1fr 1fr; }
   .overview > div:nth-child(2) { border-right: 0; }
   .overview > div:nth-child(-n + 2) { border-bottom: 1px solid var(--ink); }
